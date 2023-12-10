@@ -30,8 +30,8 @@ public class ProductAppApplication {
 				case 5 -> // delete product
 					cliHandler.deleteProduct();
 				case LAST_OPTION_MENU -> // exit
-					System.out.println("Thanks for shopping with us!");
-				default -> System.out.println("Option " + option + " not found");
+					System.out.println("Bye!");
+				default -> System.out.println("Invalid Option!!");
 			}
 		} while (option != LAST_OPTION_MENU);
 	}

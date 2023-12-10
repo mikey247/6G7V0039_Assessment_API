@@ -6,6 +6,7 @@ import com.mmu.product_app.services.ProductService;
 import com.mmu.product_app.models.*;
 import com.mmu.product_app.repository.ProductRepository;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,7 +33,6 @@ public class CommandLineController {
         System.out.println("[5] Delete product by ID");
         System.out.println("[6] Exit");
         int option = scanner.nextInt(); 
-        System.out.println(option);
         return option;
     }
 
@@ -44,13 +44,29 @@ public class CommandLineController {
         }
     }
      public void getOne(){
-        System.out.println("Get one");
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter product id");
+        try {
+            Long id = scanner.nextLong();
+            FoodProduct product = productService.getFoodProduct(id);
+    
+            if (product != null) {
+                System.out.println(product);
+            } else {
+                System.out.println("Product not found");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid product ID.");
+            scanner.nextLine(); // Consume the invalid input
+        }catch (IllegalStateException e) {
+            System.out.println(e.getMessage()); // Print the detailed error message
+        }
+        scanner.nextLine();
     }
+
      public void createProduct(){
         System.out.println("create product");
         Scanner scanner = new Scanner(System.in);
-
         FoodProduct product = new FoodProduct();
         // System.out.println("Let's create a product!");
         // System.out.println("First of all, I'd like to know your business name.");
@@ -80,10 +96,56 @@ public class CommandLineController {
         System.out.println(newFoodProduct.toString());
     }
      
-     public void updateProduct(){
-        System.out.println("update product");
-    }
-     public void deleteProduct(){
-        System.out.println("delete product");
+    public void updateProduct(){
+            Scanner scanner = new Scanner(System.in);
+            
+            try {
+                System.out.println("Let's update a product!");
+                System.out.println("Give me all the data to update the product.");
+                System.out.println("Id of product: ");
+                Long id = scanner.nextLong();
+                scanner.nextLine(); //consume \n
+                FoodProduct product = productService.getFoodProduct(id);
+                if(product != null) {
+                    System.out.println("Old Description: "+product.getDescription());
+                    System.out.print("New Description: ");
+                    String Description = scanner.nextLine();
+
+                    System.out.println("Old Price: "+product.getPrice());
+                    System.out.print("New Price: ");
+                    double price = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    System.out.println("Old SKU: "+product.getSku());
+                    System.out.print("New SKU: ");
+                    String SKU = scanner.nextLine();
+
+                    if(!Description.isEmpty()){
+                        product.setDescription(Description);
+                    }
+                    if(!SKU.isEmpty()){
+                        product.setSku(SKU);
+                    }
+                    if((price > 0)){
+                        product.setPrice(price);
+                    }
+                    productRepository.save(product);
+                    System.out.println("Your product has been updated!");
+        
+                }else {
+                    System.out.println("Product NOT FOUND!!!");
+                }
+                scanner.nextLine();   
+            } catch (IllegalStateException e) {
+            System.out.println(e.getMessage()); // Print the detailed error message
+        }
+        }
+
+    public void deleteProduct(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter product id");
+        Long id = scanner.nextLong();
+        productService.deleteProduct(id);
+        System.out.println("Product Deleted");    
     }
 }

@@ -25,9 +25,9 @@ public class ProductService {
         return newProduct;
     }
 
-    public Optional<FoodProduct> getFoodProduct(Long productId){
-        Optional<FoodProduct> product =  productRepository.findById(productId);
-        return product;
+    public FoodProduct getFoodProduct(Long productId){
+        return productRepository.findById(productId)
+        .orElseThrow(() -> new IllegalStateException("Food Product with id " + productId + " does not exist"));
     }
 
     public List<FoodProduct> getAllFoodProducts(){
