@@ -31,9 +31,8 @@ public class ProductAppApplication {
 					cliHandler.deleteProduct();
 				case LAST_OPTION_MENU -> // exit
 					System.out.println("Bye!");
-				default -> System.out.println("Invalid Option!!");
+				default -> System.out.println("Invaliid Option!!");
 			}
 		} while (option != LAST_OPTION_MENU);
 	}
-
 }

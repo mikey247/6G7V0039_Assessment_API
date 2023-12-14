@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin("http://localhost:5173/")
 @RequestMapping("/product")
 public class ProductController {
     ProductService productService;
@@ -46,5 +48,10 @@ public class ProductController {
     public ResponseEntity<List<FoodProduct>> getAllProducts(){
         productService.getAllFoodProducts();
         return new ResponseEntity<>(productService.getAllFoodProducts(), HttpStatus.OK);
+    }
+    @GetMapping("/get/{productId}")
+    public ResponseEntity<FoodProduct> getOneProduct(@PathVariable Long productId){
+       FoodProduct product = productService.getFoodProduct(productId);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }
