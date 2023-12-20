@@ -44,6 +44,6 @@ public class FoodProduct {
     private double price;
     
     public String toString() {
-        return "{id=  " + id + ", sku='" + sku + "', price=" + price + ", description=" + description + '}';
+        return "{ id= " + id + ", sku = '" + sku + "', price = " + price + ", description = " + description + '}';
     }
 }

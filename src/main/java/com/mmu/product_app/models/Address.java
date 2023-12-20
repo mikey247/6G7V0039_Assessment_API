@@ -32,4 +32,9 @@ public class Address {
     @NonNull
     @Column
     String postCode;
+
+    // generate a toString() method for the class taking into account all fields
+    public String toString() {
+        return "{ id = " + id + ", addressLine1='" + addressLine1 + "', addressLine2 = " + addressLine2 + ", addressLine3 = " + addressLine3 + ", country = " + country + ", postCode= " + postCode + '}';
+    }
 }

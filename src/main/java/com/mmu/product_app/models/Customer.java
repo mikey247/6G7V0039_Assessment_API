@@ -39,4 +39,11 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    // generate a toString() method for the class taking into account all fields and the Address class in the same folder
+    public String toString() {
+        return "{id=  " + id + ", businessName='" + businessName + "', telephoneNumber=" + telephoneNumber + ", address=" + address + '}';
+    }
 }
+
+
