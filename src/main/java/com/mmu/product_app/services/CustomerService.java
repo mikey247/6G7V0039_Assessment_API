@@ -54,6 +54,12 @@ public class CustomerService {
                 if (updatedAddress.getAddressLine2() != null) {
                     existingAddress.setAddressLine2(customer.getAddress().getAddressLine2());
                 }
+                if (updatedAddress.getAddressLine3() != null) {
+                    existingAddress.setAddressLine3(customer.getAddress().getAddressLine3());
+                }
+                if (updatedAddress.getPostCode() != null) {
+                    existingAddress.setPostCode(customer.getAddress().getPostCode());
+                }
                 existingCustomer.setAddress(existingAddress);
             }
             return customerRepository.save(existingCustomer);

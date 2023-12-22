@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin({"http://localhost:5173/", "https://6g7v0039-assessment-frontend.vercel.app/"})
 @RequestMapping("/product")
 public class ProductController {
     ProductService productService;
@@ -46,7 +46,6 @@ public class ProductController {
 
     @GetMapping("/get/all")
     public ResponseEntity<List<FoodProduct>> getAllProducts(){
-        productService.getAllFoodProducts();
         return new ResponseEntity<>(productService.getAllFoodProducts(), HttpStatus.OK);
     }
     @GetMapping("/get/{productId}")

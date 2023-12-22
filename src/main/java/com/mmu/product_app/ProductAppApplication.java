@@ -2,9 +2,14 @@ package com.mmu.product_app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mmu.product_app.controllers.CommandLineController;
+//./mvnw -e azure-spring-apps:deploy
+// mvn package
+
 
 @SpringBootApplication
 @RestController
@@ -45,4 +50,10 @@ public class ProductAppApplication {
 			}
 		} while (option != LAST_OPTION_MENU);
 	}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}	
+
 }

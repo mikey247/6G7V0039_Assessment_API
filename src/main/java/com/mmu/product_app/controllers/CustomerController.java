@@ -5,25 +5,17 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mmu.product_app.models.Customer;
 import com.mmu.product_app.services.CustomerService;
 
 import lombok.AllArgsConstructor;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/customer") 
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin({"http://localhost:5173/", "https://6g7v0039-assessment-frontend.vercel.app/"})
 public class CustomerController {
     CustomerService customerService;
 
@@ -45,12 +37,8 @@ public class CustomerController {
 
     @GetMapping("/get/all")
     public ResponseEntity<List<Customer>> getCustomers(){
-        List<Customer> customers = customerService.getCustomers();
-        if (customers != null && !customers.isEmpty()) {
+            List<Customer> customers = customerService.getCustomers();
             return new ResponseEntity<>(customers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
 
     @PutMapping("update/{customerId}")
@@ -59,5 +47,11 @@ public class CustomerController {
         return updatedCustomer
                 .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("delete/{customerId}")
+    public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long customerId){
+        customerService.deleteCustomer(customerId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

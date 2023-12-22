@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.mmu.product_app.models.FoodProduct;
 import com.mmu.product_app.repository.ProductRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -41,14 +43,20 @@ public class ProductService {
             if (!newProduct.getDescription().isEmpty()) {
                 existingFoodProduct.setDescription(newProduct.getDescription());
             }
+            if (!newProduct.getCategory().isEmpty()) {
+                existingFoodProduct.setCategory(newProduct.getCategory());
+            }
+            if (!newProduct.getSku().isEmpty()) {
+                existingFoodProduct.setSku(newProduct.getSku());
+            }
             if (newProduct.getPrice() > 0) {
                 existingFoodProduct.setPrice(newProduct.getPrice());
             }
-            productRepository.save(existingFoodProduct);
+            return productRepository.save(existingFoodProduct);
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found");
         }
-        return !product.isEmpty() ? product.get() : null;
+//        return product.orElse(null);
     }
 
     public void deleteProduct(Long productId){

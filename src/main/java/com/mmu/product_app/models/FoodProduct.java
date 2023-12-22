@@ -1,5 +1,6 @@
 package com.mmu.product_app.models;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class FoodProduct {
     private String category;
     
     @Column
-    @NonNull
+    @Nonnull
     private double price;
     
     public String toString() {

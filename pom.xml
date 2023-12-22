@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -52,6 +51,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<!-- <dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency> -->
+
+		
 	</dependencies>
 
 	<build>
@@ -71,7 +89,37 @@
 					</excludes>
 				</configuration>
 			</plugin>
+		    <plugin>
+		        <groupId>com.microsoft.azure</groupId>
+		        <artifactId>azure-spring-apps-maven-plugin</artifactId>
+		        <version>1.19.0</version>
+		        <configuration>
+		            <subscriptionId>ab39d0e9-0a1f-4833-887a-94aaef0418c6</subscriptionId>
+		            <resourceGroup>MMU</resourceGroup>
+		            <clusterName>g7v0039-assessment-api</clusterName>
+		            <appName>product-app</appName>
+		            <isPublic>true</isPublic>
+		            <deployment>
+		                <cpu>1</cpu>
+		                <memoryInGB>2</memoryInGB>
+		                <instanceCount>1</instanceCount>
+		                <runtimeVersion>Java 17</runtimeVersion>
+		                <resources>
+		                    <resource>
+		                        <filtering/>
+		                        <mergeId/>
+		                        <!-- <targetPath/> -->
+		                        <directory>./target</directory>
+		                        <includes>
+		                            <include>*.jar</include>
+		                        </includes>
+		                    </resource>
+		                </resources>
+		            </deployment>
+		        </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 
 </project>
+
