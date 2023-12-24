@@ -3,17 +3,10 @@ package com.mmu.product_app.services;
 import com.mmu.product_app.models.User;
 import com.mmu.product_app.repository.UserRepository;
 import com.mmu.product_app.utils.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,9 +28,7 @@ public class AuthService {
 
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(savedUser);
-    return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
-        .build();
+    return AuthenticationResponse.builder().accessToken(jwtToken).build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
