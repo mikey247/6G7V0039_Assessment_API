@@ -14,9 +14,7 @@ import com.mmu.product_app.controllers.CommandLineController;
 @SpringBootApplication
 @RestController
 public class ProductAppApplication {
-
 	public static void main(String[] args) {
-		
 		var x = SpringApplication.run(ProductAppApplication.class, args);
 		final int LAST_OPTION_MENU = 11;
 		CommandLineController cliHandler = x.getBean(CommandLineController.class);
@@ -54,6 +52,5 @@ public class ProductAppApplication {
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
-	}	
-
+	}
 }
