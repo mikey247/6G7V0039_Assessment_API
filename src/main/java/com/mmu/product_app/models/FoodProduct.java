@@ -1,18 +1,18 @@
 package com.mmu.product_app.models;
 
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
@@ -28,8 +28,9 @@ public class FoodProduct {
     @Column
     private Long id;
     
-    @Column
+    @Column(unique = true)
     @NonNull
+    @NotBlank(message = "SKU is mandatory")
     private String sku; //stock keeping unit (a unique code for each product)
     
     @Column
@@ -43,6 +44,10 @@ public class FoodProduct {
     @Column
     @Nonnull
     private double price;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "foodProduct", cascade = CascadeType.ALL)
+    private List<FoodProductItem> items;
     
     public String toString() {
         return "{ id= " + id + ", sku = '" + sku + "', price = " + price + ", description = " + description + '}';

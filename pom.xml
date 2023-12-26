@@ -44,6 +44,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
@@ -129,7 +135,13 @@
 		                            <include>*.jar</include>
 		                        </includes>
 		                    </resource>
-		                </resources>
+							<resource>
+								<directory>${project.basedir}</directory>
+								<excludes>
+									<exclude>./foodStore.sqlite</exclude>
+								</excludes>
+							</resource>
+						</resources>
 		            </deployment>
 		        </configuration>
 		    </plugin>

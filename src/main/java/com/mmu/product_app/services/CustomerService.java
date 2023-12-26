@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.mmu.product_app.models.Address;
 import com.mmu.product_app.models.Customer;
-import com.mmu.product_app.models.FoodProduct;
 import com.mmu.product_app.repository.CustomerRepository;
 
 import lombok.AllArgsConstructor;
