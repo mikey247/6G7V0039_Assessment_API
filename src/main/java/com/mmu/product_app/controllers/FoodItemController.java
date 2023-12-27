@@ -3,7 +3,7 @@ package com.mmu.product_app.controllers;
 import com.mmu.product_app.models.FoodProduct;
 import com.mmu.product_app.models.FoodProductItem;
 import com.mmu.product_app.services.FoodItemService;
-import com.mmu.product_app.services.ProductService;
+import com.mmu.product_app.services.FoodProductService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/food-item")
 @CrossOrigin({"http://localhost:5173/", "https://6g7v0039-assessment-frontend.vercel.app/"})
 public class FoodItemController {
-    final private ProductService productService;
+    final private FoodProductService productService;
     final private FoodItemService foodItemService;
 
     @PostMapping("/create")

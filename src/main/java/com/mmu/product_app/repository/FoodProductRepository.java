@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.mmu.product_app.models.FoodProduct;
 
 
-public interface ProductRepository extends CrudRepository<FoodProduct,Long> {
+public interface FoodProductRepository extends CrudRepository<FoodProduct,Long> {
 
     
 } 

@@ -3,10 +3,10 @@ package com.mmu.product_app.controllers;
 import org.springframework.stereotype.Component;
 
 import com.mmu.product_app.services.CustomerService;
-import com.mmu.product_app.services.ProductService;
+import com.mmu.product_app.services.FoodProductService;
 import com.mmu.product_app.models.*;
 import com.mmu.product_app.repository.CustomerRepository;
-import com.mmu.product_app.repository.ProductRepository;
+import com.mmu.product_app.repository.FoodProductRepository;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -15,14 +15,14 @@ import com.mmu.product_app.models.Address;
 
 @Component
 public class CommandLineController {
-    ProductService productService;
-    ProductRepository productRepository;
+    FoodProductService productService;
+    FoodProductRepository productRepository;
     CustomerService customerService;
     CustomerRepository customerRepository;
 
-    public CommandLineController(ProductRepository productRepository, ProductService productService, CustomerService customerService, CustomerRepository customerRepository) {
+    public CommandLineController(FoodProductRepository productRepository, FoodProductService foodProductService, CustomerService customerService, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
-        this.productService = productService;
+        this.productService = foodProductService;
         this.customerService = customerService;
         this.customerRepository = customerRepository;
     }

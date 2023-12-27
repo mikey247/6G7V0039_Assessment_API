@@ -8,17 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.mmu.product_app.models.FoodProduct;
-import com.mmu.product_app.repository.ProductRepository;
+import com.mmu.product_app.repository.FoodProductRepository;
 import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
-public class ProductService {
+public class FoodProductService {
 
-    private final ProductRepository productRepository;
+    private final FoodProductRepository productRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public FoodProductService(FoodProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
