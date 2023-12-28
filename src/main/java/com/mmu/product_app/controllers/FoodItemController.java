@@ -18,11 +18,24 @@ public class FoodItemController {
     final private FoodProductService productService;
     final private FoodItemService foodItemService;
 
+    /**
+     * Create a new food item.
+     *
+     * @return ResponseEntity with a success message and HTTP status code 201 (Created)
+     */
     @PostMapping("/create")
     public ResponseEntity<String> createFoodItem (){
        return new ResponseEntity<>("Right here", HttpStatus.CREATED);
     }
 
+    /**
+     * Create a new food item for a specific food product.
+     *
+     * @param foodProductItem The food product item to be created
+     * @param foodProductId The ID of the food product
+     * @return ResponseEntity with the created food product item and HTTP status code 201 (Created),
+     *         or an error message and HTTP status code 500 (Internal Server Error) if an exception occurs
+     */
     @PostMapping("/create/{foodProductId}")
     public ResponseEntity<FoodProductItem> createFoodItem (@RequestBody FoodProductItem foodProductItem, @PathVariable Long foodProductId){
         try{

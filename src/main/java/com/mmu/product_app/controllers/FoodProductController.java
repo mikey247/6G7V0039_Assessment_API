@@ -26,32 +26,63 @@ import lombok.AllArgsConstructor;
 public class FoodProductController {
     FoodProductService foodProductService;
 
+    /**
+     * Create a new food product.
+     *
+     * @param product the food product to create
+     * @return the created food product
+     */
     @PostMapping("/create")
-    public ResponseEntity<FoodProduct> createProduct( @RequestBody FoodProduct product){
+    public ResponseEntity<FoodProduct> createProduct(@RequestBody FoodProduct product) {
         FoodProduct newProduct = foodProductService.createFoodProduct(product);
         System.out.println(newProduct);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
-    }  
+    }
 
+    /**
+     * Update an existing food product.
+     *
+     * @param productId the ID of the product to update
+     * @param product   the updated food product
+     * @return the updated food product
+     */
     @PutMapping("/update/{productId}")
-    public ResponseEntity<FoodProduct> updateProduct(@PathVariable Long productId, @RequestBody FoodProduct product){
+    public ResponseEntity<FoodProduct> updateProduct(@PathVariable Long productId, @RequestBody FoodProduct product) {
         FoodProduct updateFoodProduct = foodProductService.updateFoodProduct(productId, product);
         return new ResponseEntity<>(updateFoodProduct, HttpStatus.CREATED);
     }
 
+    /**
+     * Delete a food product.
+     *
+     * @param productId the ID of the product to delete
+     * @return HTTP status indicating the success of the deletion
+     */
     @DeleteMapping("/delete/{productId}")
-    public ResponseEntity<HttpStatus> deleteStudent (@PathVariable Long productId){
+    public ResponseEntity<HttpStatus> deleteStudent(@PathVariable Long productId) {
         foodProductService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Get all food products.
+     *
+     * @return a list of all food products
+     */
     @GetMapping("/get/all")
-    public ResponseEntity<List<FoodProduct>> getAllProducts(){
+    public ResponseEntity<List<FoodProduct>> getAllProducts() {
         return new ResponseEntity<>(foodProductService.getAllFoodProducts(), HttpStatus.OK);
     }
+
+    /**
+     * Get a specific food product by ID.
+     *
+     * @param productId the ID of the product to retrieve
+     * @return the requested food product
+     */
     @GetMapping("/get/{productId}")
-    public ResponseEntity<FoodProduct> getOneProduct(@PathVariable Long productId){
-       FoodProduct product = foodProductService.getFoodProduct(productId);
+    public ResponseEntity<FoodProduct> getOneProduct(@PathVariable Long productId) {
+        FoodProduct product = foodProductService.getFoodProduct(productId);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

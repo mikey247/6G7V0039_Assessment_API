@@ -9,6 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * The AuthService class provides authentication and registration services for users.
+ * It handles user registration and authentication using Spring Security and JWT (JSON Web Token).
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -17,6 +21,12 @@ public class AuthService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
+  /**
+   * Registers a new user with the provided registration request.
+   *
+   * @param request The registration request containing user details.
+   * @return An AuthenticationResponse object containing the generated JWT access token.
+   */
   public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
         .firstName(request.getFirstName())
@@ -31,6 +41,13 @@ public class AuthService {
     return AuthenticationResponse.builder().accessToken(jwtToken).build();
   }
 
+  /**
+   * Authenticates a user with the provided authentication request.
+   *
+   * @param request The authentication request containing user credentials.
+   * @return An AuthenticationResponse object containing the generated JWT access token.
+   *         Returns null if authentication fails.
+   */
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
    try {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( request.getEmail(), request.getPassword() ));

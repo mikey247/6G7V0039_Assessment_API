@@ -22,8 +22,6 @@ import com.mmu.product_app.models.Address;
 import com.mmu.product_app.models.Customer;
 import com.mmu.product_app.repository.CustomerRepository;
 import com.mmu.product_app.services.CustomerService;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
@@ -168,9 +166,28 @@ public class CustomerServiceTest {
         // Verify that the delete method of customerRepository is called with the correct customer
         verify(customerRepository, times(1)).deleteById(1L);
     }
-
+    
     @Test
     public void testUpdateCustomer() {
-        // TODO: Implement test for updateCustomer method
+        // Create a sample customer
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setBusinessName("John Doe Ventures");
+        customer.setTelephoneNumber("1234567890");
+
+        // Mock the behavior of the customerRepository
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        // Call the updateCustomer method
+       Optional<Customer> updatedCustomer = customerService.updateCustomer(1L, customer);
+
+        // Verify that the customerRepository's findById and save methods are called with the correct parameters
+        verify(customerRepository).findById(1L);
+        verify(customerRepository).save(customer);
+
+        // Verify that the updated customer is returned correctly
+        assertEquals(customer, updatedCustomer.get());
+        verify(customerRepository, times(1)).save(any(Customer.class));
     }
 }

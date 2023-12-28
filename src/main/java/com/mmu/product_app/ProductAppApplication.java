@@ -7,8 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mmu.product_app.controllers.CommandLineController;
-//./mvnw -e azure-spring-apps:deploy
 // mvn package
+//./mvnw -e azure-spring-apps:deploy
+
+// ./mvnw javadoc:javadoc
 
 
 @SpringBootApplication

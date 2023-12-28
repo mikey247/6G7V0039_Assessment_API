@@ -16,6 +16,37 @@ import lombok.Setter;
 import lombok.NonNull;
 
 
+/**
+ * Represents a customer in the product application.
+ * This class contains information about the customer's business name, telephone number, and address.
+ *
+ * <p>
+ * The {@code Customer} class provides methods to access and modify the customer's information.
+ * It also includes annotations for database mapping and table configuration.
+ * </p>
+ *
+ * <p>
+ * The customer's information includes:
+ * <ul>
+ *     <li>Business name</li>
+ *     <li>Telephone number</li>
+ *     <li>Address</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * The {@code Customer} class is annotated with {@code @Entity} to indicate that it is a JPA entity.
+ * It is also annotated with {@code @Table} to specify the name of the database table for this entity.
+ * </p>
+ *
+ * <p>
+ * The class includes getters and setters for all the properties, as well as constructors for creating instances of the class.
+ * </p>
+ */
+/**
+ * Represents a customer in the product application.
+ * This class contains information about the customer's business name, telephone number, and address.
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -23,6 +54,7 @@ import lombok.NonNull;
 @Entity
 @Table(name = "customer")
 public class Customer {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -40,7 +72,12 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    // generate a toString() method for the class taking into account all fields and the Address class in the same folder
+    /**
+     * Returns a string representation of the Customer object.
+     * The string includes the values of all fields, including the Address object.
+     *
+     * @return a string representation of the Customer object
+     */
     public String toString() {
         return "{id=  " + id + ", businessName='" + businessName + "', telephoneNumber=" + telephoneNumber + ", address=" + address + '}';
     }

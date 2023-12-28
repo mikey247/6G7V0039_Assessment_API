@@ -19,12 +19,24 @@ import lombok.AllArgsConstructor;
 public class CustomerController {
     CustomerService customerService;
 
+    /**
+     * Create a new customer.
+     *
+     * @param customer The customer object to be created.
+     * @return The created customer object.
+     */
     @PostMapping("/create")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
         Customer newCustomer = customerService.createCustomer(customer);
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
+    /**
+     * Get a customer by ID.
+     *
+     * @param customerId The ID of the customer to retrieve.
+     * @return The customer object if found, or a NOT_FOUND status if not found.
+     */
     @GetMapping("/get/{customerId}")
     public ResponseEntity<Customer> getMethodName(@PathVariable Long customerId ) {
         Customer customer = customerService.getCustomer(customerId);
@@ -35,12 +47,24 @@ public class CustomerController {
         }
     } 
 
+    /**
+     * Get all customers.
+     *
+     * @return A list of all customers.
+     */
     @GetMapping("/get/all")
     public ResponseEntity<List<Customer>> getCustomers(){
             List<Customer> customers = customerService.getCustomers();
             return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    /**
+     * Update a customer by ID.
+     *
+     * @param customerId The ID of the customer to update.
+     * @param customer The updated customer object.
+     * @return The updated customer object if found, or a NOT_FOUND status if not found.
+     */
     @PutMapping("update/{customerId}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable Long customerId, @RequestBody Customer customer) {
         Optional<Customer> updatedCustomer = customerService.updateCustomer(customerId, customer);
@@ -49,6 +73,12 @@ public class CustomerController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Delete a customer by ID.
+     *
+     * @param customerId The ID of the customer to delete.
+     * @return A NO_CONTENT status.
+     */
     @DeleteMapping("delete/{customerId}")
     public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long customerId){
         customerService.deleteCustomer(customerId);
