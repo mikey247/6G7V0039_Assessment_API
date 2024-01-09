@@ -15,7 +15,9 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 
-
+/**
+ * Controller class for handling authentication-related endpoints.
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -25,17 +27,35 @@ public class AuthController {
     private final UserService userService;
     private final JwtService jwtService;
 
+    /**
+     * Endpoint for user registration.
+     *
+     * @param user The registration request containing user details.
+     * @return The authentication response containing the JWT token.
+     */
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser (@RequestBody RegisterRequest user){
         AuthenticationResponse response = authService.register(user);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Endpoint for user authentication.
+     *
+     * @param request The authentication request containing user credentials.
+     * @return The authentication response containing the JWT token.
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate( @RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    /**
+     * Endpoint for retrieving user information by email extracted from JWT Token.
+     *
+     * @param headers The HTTP headers containing the authorization token.
+     * @return The user information.
+     */
     @GetMapping("/creds")
     public ResponseEntity<User> getUserByEmail(@RequestHeader HttpHeaders headers){
         String authorizationHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
@@ -47,6 +67,4 @@ public class AuthController {
         User user =  userService.getUser(email);
        return ResponseEntity.ok(user);
     }
-
-    
 }

@@ -11,6 +11,9 @@ import com.mmu.product_app.models.FoodProduct;
 import com.mmu.product_app.repository.FoodProductRepository;
 import org.springframework.web.server.ResponseStatusException;
 
+
+
+
 /**
  * The FoodProductService class provides methods to perform CRUD operations on FoodProduct objects.
  * It interacts with the FoodProductRepository to access and manipulate the data.
@@ -36,9 +39,20 @@ public class FoodProductService {
      * @param product The FoodProduct object to be created.
      * @return The newly created FoodProduct object.
      */
-    public FoodProduct createFoodProduct(FoodProduct product){
-        FoodProduct newProduct = productRepository.save(product);
-        return newProduct;
+    public FoodProduct createFoodProduct(FoodProduct product) {
+        try {
+            String sku = product.getSku();
+            Optional<FoodProduct> existingProduct = productRepository.findBySku(sku);
+            if (existingProduct.isPresent()) {
+                return null;
+            }
+            FoodProduct newProduct = productRepository.save(product);
+            return newProduct;
+        } catch (Exception e) {
+            // Handle the exception here
+            System.out.println("An error occurred: " + e.getMessage());
+            return null; // Or throw a custom exception
+        }
     }
 
     /**

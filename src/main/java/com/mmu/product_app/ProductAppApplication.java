@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mmu.product_app.controllers.CommandLineController;
 // mvn package
 //./mvnw -e azure-spring-apps:deploy
-
 // ./mvnw javadoc:javadoc
 
 

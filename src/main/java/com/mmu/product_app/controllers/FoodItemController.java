@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for managing food item-related operations.
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("/food-item")
@@ -17,16 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class FoodItemController {
     final private FoodProductService productService;
     final private FoodItemService foodItemService;
-
-    /**
-     * Create a new food item.
-     *
-     * @return ResponseEntity with a success message and HTTP status code 201 (Created)
-     */
-    @PostMapping("/create")
-    public ResponseEntity<String> createFoodItem (){
-       return new ResponseEntity<>("Right here", HttpStatus.CREATED);
-    }
 
     /**
      * Create a new food item for a specific food product.

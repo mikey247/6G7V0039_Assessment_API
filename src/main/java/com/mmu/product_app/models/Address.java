@@ -1,12 +1,21 @@
 package com.mmu.product_app.models;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.NonNull;
 
 /**
- * The Address class represents a physical address.
- * It is used as a model for storing address information in the application.
- */
+* The Address class represents a physical address.
+* It is used as a model for storing address information in the application.
+*/
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -14,6 +23,10 @@ import lombok.*;
 @Entity
 @Table(name = "address")
 public class Address {
+
+/**
+* The unique identifier of the address.
+*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

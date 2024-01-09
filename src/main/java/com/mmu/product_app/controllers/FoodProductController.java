@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mmu.product_app.models.FoodProduct;
 import com.mmu.product_app.services.FoodProductService;
+import com.mmu.product_app.utils.HttpMessage;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller class for managing food products.
+ */
 @AllArgsConstructor
 @RestController
 @CrossOrigin({"http://localhost:5173/", "https://6g7v0039-assessment-frontend.vercel.app/"})
@@ -33,10 +38,14 @@ public class FoodProductController {
      * @return the created food product
      */
     @PostMapping("/create")
-    public ResponseEntity<FoodProduct> createProduct(@RequestBody FoodProduct product) {
+    public ResponseEntity<HttpMessage> createProduct(@RequestBody FoodProduct product) {
         FoodProduct newProduct = foodProductService.createFoodProduct(product);
         System.out.println(newProduct);
-        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+        if (newProduct == null) {
+            return new ResponseEntity<>(new HttpMessage(HttpStatus.BAD_REQUEST.value(),"Failed to create product"), HttpStatus.BAD_REQUEST);
+            // return new ResponseEntity<>("Failed to create product", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new HttpMessage(HttpStatus.CREATED.value(), "Product created successfully"), HttpStatus.CREATED);
     }
 
     /**

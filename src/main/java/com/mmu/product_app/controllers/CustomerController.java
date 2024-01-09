@@ -12,6 +12,9 @@ import com.mmu.product_app.services.CustomerService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller class for managing customer-related operations.
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("/customer") 

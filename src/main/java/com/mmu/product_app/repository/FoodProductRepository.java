@@ -14,6 +14,8 @@
  */
 package com.mmu.product_app.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.mmu.product_app.models.FoodProduct;
@@ -21,6 +23,5 @@ import com.mmu.product_app.models.FoodProduct;
 
 
 public interface FoodProductRepository extends CrudRepository<FoodProduct,Long> {
-
-    
+    Optional<FoodProduct> findBySku(String sku);   
 } 

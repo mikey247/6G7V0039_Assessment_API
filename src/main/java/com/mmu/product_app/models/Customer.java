@@ -43,10 +43,6 @@ import lombok.NonNull;
  * The class includes getters and setters for all the properties, as well as constructors for creating instances of the class.
  * </p>
  */
-/**
- * Represents a customer in the product application.
- * This class contains information about the customer's business name, telephone number, and address.
- */
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -55,18 +51,30 @@ import lombok.NonNull;
 @Table(name = "customer")
 public class Customer {
     
+    /**
+     * The unique identifier of the customer.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
+    /**
+     * The business name of the customer.
+     */
     @Column
     @NonNull
     private String businessName;
 
+    /**
+     * The telephone number of the customer.
+     */
     @Column
     private String telephoneNumber;
 
+    /**
+     * The address of the customer.
+     */
     @NonNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")

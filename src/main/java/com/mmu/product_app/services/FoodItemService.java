@@ -25,7 +25,13 @@ public class FoodItemService {
      * @return The created food product item.
      */
     public FoodProductItem createFoodProductItem(FoodProductItem foodProductItem){
-        return foodItemRepository.save(foodProductItem);
+        try {
+            return foodItemRepository.save(foodProductItem);
+        } catch (Exception e) {
+            // Handle the exception here
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -35,7 +41,13 @@ public class FoodItemService {
      * @return The retrieved food product item, or null if not found.
      */
     public FoodProductItem getFoodProductItem(Long foodProductItemId){
-        return foodItemRepository.findById(foodProductItemId).orElse(null);
+        try {
+            return foodItemRepository.findById(foodProductItemId).orElse(null);
+        } catch (Exception e) {
+            // Handle the exception here
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -44,7 +56,13 @@ public class FoodItemService {
      * @return A list of all food product items.
      */
     public List<FoodProductItem> getAllFoodItems() {
-        return foodItemRepository.findAll();
+        try {
+            return foodItemRepository.findAll();
+        } catch (Exception e) {
+            // Handle the exception here
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -53,7 +71,12 @@ public class FoodItemService {
      * @param foodProductItemId The ID of the food product item to delete.
      */
     public void deleteFoodProductItem(Long foodProductItemId){
-        foodItemRepository.deleteById(foodProductItemId);
+        try {
+            foodItemRepository.deleteById(foodProductItemId);
+        } catch (Exception e) {
+            // Handle the exception here
+            e.printStackTrace();
+        }
     }
 
 }

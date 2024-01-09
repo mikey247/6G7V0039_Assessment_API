@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 import com.mmu.product_app.models.Address;
 
+/**
+ * The CommandLineController class represents a command-line interface controller for the product application.
+ * It provides methods to interact with the user and perform various operations on products and customers.
+ */
 @Component
 public class CommandLineController {
     FoodProductService productService;
@@ -20,6 +24,14 @@ public class CommandLineController {
     CustomerService customerService;
     CustomerRepository customerRepository;
 
+    /**
+     * Constructs a CommandLineController object with the specified dependencies.
+     * 
+     * @param productRepository the repository for food products
+     * @param foodProductService the service for food products
+     * @param customerService the service for customers
+     * @param customerRepository the repository for customers
+     */
     public CommandLineController(FoodProductRepository productRepository, FoodProductService foodProductService, CustomerService customerService, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
         this.productService = foodProductService;
@@ -27,6 +39,11 @@ public class CommandLineController {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Displays the main menu and prompts the user to choose an option.
+     * 
+     * @return the selected option
+     */
     public int showMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("-----------------------------------------------------");
@@ -48,6 +65,9 @@ public class CommandLineController {
         return option;
     }
 
+    /**
+     * Retrieves and displays all food products.
+     */
     public void getAllProducts(){
         System.out.println("Get all");
         List<FoodProduct> products = productService.getAllFoodProducts();
@@ -55,7 +75,11 @@ public class CommandLineController {
             System.out.println(products.get(index).toString());
         }
     }
-     public void getOneProduct(){
+    
+    /**
+     * Retrieves and displays a specific food product based on the provided ID.
+     */
+    public void getOneProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter product id");
         try {
@@ -76,17 +100,13 @@ public class CommandLineController {
         scanner.nextLine();
     }
 
-     public void createProduct(){
+    /**
+     * Creates a new food product based on user input.
+     */
+    public void createProduct(){
         System.out.println("create product");
         Scanner scanner = new Scanner(System.in);
         FoodProduct product = new FoodProduct();
-        // System.out.println("Let's create a product!");
-        // System.out.println("First of all, I'd like to know your business name.");
-        // System.out.println("Business name: ");
-        // String businessName = scanner.nextLine();
-        // Customer business = customerRepository.findByBusinessName(businessName).orElseThrow(
-        //         () -> new IllegalStateException("Oops, you might have entered a wrong business name. Lets try again.")
-        // );
         System.out.println("Description: ");
         String description = scanner.nextLine();
         product.setDescription(description);
@@ -108,51 +128,56 @@ public class CommandLineController {
         System.out.println(newFoodProduct.toString());
     }
      
+    /**
+     * Updates an existing food product based on user input.
+     */
     public void updateProduct(){
-            Scanner scanner = new Scanner(System.in);
-            
-            try {
-                System.out.println("Let's update a product!");
-                System.out.println("Give me all the data to update the product.");
-                System.out.println("Id of product: ");
-                Long id = scanner.nextLong();
-                scanner.nextLine(); //consume \n
-                FoodProduct product = productService.getFoodProduct(id);
-                if(product != null) {
-                    System.out.println("Old Description: "+product.getDescription());
-                    System.out.print("New Description: ");
-                    String Description = scanner.nextLine();
-
-                    System.out.println("Old Price: "+product.getPrice());
-                    System.out.print("New Price: ");
-                    double price = scanner.nextDouble();
-                    scanner.nextLine();
-
-                    System.out.println("Old SKU: "+product.getSku());
-                    System.out.print("New SKU: ");
-                    String SKU = scanner.nextLine();
-
-                    if(!Description.isEmpty()){
-                        product.setDescription(Description);
-                    }
-                    if(!SKU.isEmpty()){
-                        product.setSku(SKU);
-                    }
-                    if((price > 0)){
-                        product.setPrice(price);
-                    }
-                    productRepository.save(product);
-                    System.out.println("Your product has been updated!");
+        Scanner scanner = new Scanner(System.in);
         
-                }else {
-                    System.out.println("Product NOT FOUND!!!");
+        try {
+            System.out.println("Let's update the product!");
+            System.out.println("Id of product: ");
+            Long id = scanner.nextLong();
+            scanner.nextLine(); //consume \n
+            FoodProduct product = productService.getFoodProduct(id);
+            if(product != null) {
+                System.out.println("Old Description: "+product.getDescription());
+                System.out.print("New Description: ");
+                String Description = scanner.nextLine();
+
+                System.out.println("Old SKU: "+product.getSku());
+                System.out.print("New SKU: ");
+                String SKU = scanner.nextLine();
+
+                System.out.println("Old Price: "+ product.getPrice());
+                System.out.print("New Price (required due to scanner.nextDouble behaviour): ");
+                double price = scanner.nextDouble();
+                scanner.nextLine(); //consume \n
+
+                if(!Description.isEmpty()){
+                    product.setDescription(Description);
                 }
-                scanner.nextLine();   
-            } catch (IllegalStateException e) {
+                if(!SKU.isEmpty()){
+                    product.setSku(SKU);
+                }
+                if((price > 0)){
+                    product.setPrice(price);
+                }
+                productRepository.save(product);
+                System.out.println("Your product has been updated!");
+
+            }else {
+                System.out.println("Product NOT FOUND!!!");
+            }
+            scanner.nextLine();   
+        } catch (IllegalStateException e) {
             System.out.println(e.getMessage()); // Print the detailed error message
         }
-        }
+    }
 
+    /**
+     * Deletes a food product based on the provided ID.
+     */
     public void deleteProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter product id");
@@ -161,12 +186,19 @@ public class CommandLineController {
         System.out.println("Product Deleted");    
     }
 
+    /**
+     * Retrieves and displays all customers.
+     */
     public void getAllCustomers(){
         List<Customer> customers = customerService.getCustomers();
         for (Customer customer : customers) {
             System.out.println(customer.toString());
         }
     }
+
+    /**
+     * Retrieves and displays a specific customer based on the provided ID.
+     */
     public void getCustomer(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter customer ID: ");
@@ -179,6 +211,9 @@ public class CommandLineController {
         }
     }
 
+    /**
+     * Creates a new customer based on user input.
+     */
     public void createCustomer(){
         System.out.println("create customer");
         Scanner scanner = new Scanner(System.in);
@@ -220,33 +255,60 @@ public class CommandLineController {
         System.out.println(newCustomer.toString());
     }
 
+    /**
+     * Updates an existing customer based on user input.
+     */
     public void updateCustomer() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter customer ID: ");
         Long customerId = scanner.nextLong();
+        scanner.nextLine(); // Consume the newline character
+
         Customer customer = customerService.getCustomer(customerId);
         if (customer != null) {
             System.out.println("Enter new business name: ");
             String businessName = scanner.nextLine();
-            customer.setBusinessName(businessName);
+            if (!businessName.trim().isEmpty()) {
+                customer.setBusinessName(businessName);
+            }
 
             System.out.println("Enter new telephone number: ");
             String telephoneNumber = scanner.nextLine();
-            customer.setTelephoneNumber(telephoneNumber);
+            if (!telephoneNumber.trim().isEmpty()) {
+                customer.setTelephoneNumber(telephoneNumber);
+            }
 
             Address address = customer.getAddress();
             System.out.println("Enter new address line 1: ");
             String addressLine1 = scanner.nextLine();
-            address.setAddressLine1(addressLine1);
+            if (!addressLine1.trim().isEmpty()) {
+                address.setAddressLine1(addressLine1);
+            }
 
             System.out.println("Enter new address line 2: ");
             String addressLine2 = scanner.nextLine();
-            address.setAddressLine2(addressLine2);
+            if (!addressLine2.trim().isEmpty()) {
+                address.setAddressLine2(addressLine2);
+            }
 
             System.out.println("Enter new address line 3: ");
             String addressLine3 = scanner.nextLine();
-            address.setAddressLine3(addressLine3);
+            if (!addressLine3.trim().isEmpty()) {
+                address.setAddressLine3(addressLine3);
+            }
 
+            System.out.println("Enter new post code: ");
+            String postCode = scanner.nextLine();
+            if (!postCode.trim().isEmpty()) {
+                address.setPostCode(postCode);
+            }
+
+            System.out.println("Enter new country: ");
+            String country = scanner.nextLine();
+            if (!country.trim().isEmpty()) {
+                address.setCountry(country);
+            }
+            
             customerService.updateCustomer(customerId, customer);
             System.out.println("Customer updated successfully.");
         } else {
@@ -254,6 +316,9 @@ public class CommandLineController {
         }
     }
 
+    /**
+     * Deletes a customer based on the provided ID.
+     */
     public void deleteCustomer(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter customer ID: ");
