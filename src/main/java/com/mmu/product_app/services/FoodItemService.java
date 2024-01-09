@@ -66,6 +66,22 @@ public class FoodItemService {
     }
 
     /**
+     * Updates a food product item.
+     *
+     * @param foodProductItem The food product item to be updated.
+     * @return The updated food product item.
+     */
+    public FoodProductItem updateFoodProductItem(FoodProductItem foodProductItem) {
+        try {
+            return foodItemRepository.save(foodProductItem);
+        } catch (Exception e) {
+            // Handle the exception here
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * Deletes a food product item by its ID.
      *
      * @param foodProductItemId The ID of the food product item to delete.
@@ -78,5 +94,4 @@ public class FoodItemService {
             e.printStackTrace();
         }
     }
-
 }

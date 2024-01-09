@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 /**
  * Controller class for managing food item-related operations.
@@ -41,6 +42,89 @@ public class FoodItemController {
             System.out.println("Food Product Item Created");
             return new ResponseEntity<>(newFoodProductItem, HttpStatus.CREATED);
         }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get a specific food item by its ID.
+     *
+     * @param foodItemId The ID of the food item
+     * @return ResponseEntity with the requested food item and HTTP status code 200 (OK),
+     *         or an error message and HTTP status code 500 (Internal Server Error) if an exception occurs
+     */
+    @GetMapping("/{foodItemId}")
+    public ResponseEntity<FoodProductItem> getFoodItem(@PathVariable Long foodItemId) {
+        try {
+            FoodProductItem foodItem = foodItemService.getFoodProductItem(foodItemId);
+            return new ResponseEntity<>(foodItem, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get all food items.
+     *
+     * @return ResponseEntity with the list of all food items and HTTP status code 200 (OK),
+     *         or an error message and HTTP status code 500 (Internal Server Error) if an exception occurs
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<FoodProductItem>> getAllFoodItems() {
+        try {
+            List<FoodProductItem> foodItems = foodItemService.getAllFoodItems();
+            return new ResponseEntity<>(foodItems, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Update a specific food item.
+     *
+     * @param foodItemId The ID of the food item to be updated
+     * @param updatedFoodItem The updated food item
+     * @return ResponseEntity with the updated food item and HTTP status code 200 (OK),
+     *         or an error message and HTTP status code 500 (Internal Server Error) if an exception occurs
+     */
+    @PutMapping("/update/{foodItemId}")
+    public ResponseEntity<FoodProductItem> updateFoodItem(@PathVariable Long foodItemId, @RequestBody FoodProductItem updatedFoodItem) {
+        try {
+            FoodProductItem foodItem = foodItemService.getFoodProductItem(foodItemId);
+            if (foodItem == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            foodItem.setSerialNumber(updatedFoodItem.getSerialNumber());
+            foodItem.setExpiryDate(updatedFoodItem.getExpiryDate());
+
+            FoodProductItem updatedItem = foodItemService.updateFoodProductItem(foodItem);
+            return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete a specific food item.
+     *
+     * @param foodItemId The ID of the food item to be deleted
+     * @return ResponseEntity with the deleted food item and HTTP status code 200 (OK),
+     *         or an error message and HTTP status code 500 (Internal Server Error) if an exception occurs
+     */
+    @DeleteMapping("/delete/{foodItemId}")
+    public ResponseEntity<FoodProductItem> deleteFoodItem(@PathVariable Long foodItemId) {
+        try {
+            FoodProductItem foodItem = foodItemService.getFoodProductItem(foodItemId);
+            if (foodItem == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            foodItemService.deleteFoodProductItem(foodItemId);
+            return new ResponseEntity<>(foodItem, HttpStatus.OK);
+        } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
