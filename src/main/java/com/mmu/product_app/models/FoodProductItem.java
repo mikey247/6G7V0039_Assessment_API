@@ -24,6 +24,11 @@ import lombok.Setter;
     @UniqueConstraint(columnNames = {"product_id"})
 })
 public class FoodProductItem {
+    public FoodProductItem(String serialNumber, String expiryDate, FoodProduct foodProduct) {
+        this.serialNumber = serialNumber;
+        this.expiryDate = LocalDate.parse(expiryDate);
+        this.foodProduct = foodProduct;
+    }
 
     /**
      * The unique identifier of the food product item.
@@ -36,7 +41,7 @@ public class FoodProductItem {
     /**
      * The serial number of the food product item.
      */
-    @Column
+    @Column(unique = true)
     @NonNull
     private String serialNumber;
 
@@ -44,6 +49,7 @@ public class FoodProductItem {
      * The expiry date of the food product item.
      */
     @Column
+    @NonNull
     private LocalDate expiryDate;
     
     /**
@@ -51,6 +57,7 @@ public class FoodProductItem {
      */
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
+    
     private FoodProduct foodProduct; // Reference to FoodProduct
 
     /**

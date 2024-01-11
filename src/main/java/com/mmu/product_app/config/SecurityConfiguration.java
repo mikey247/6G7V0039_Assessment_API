@@ -22,7 +22,7 @@ import java.util.Arrays;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private static final String[] WHITE_LIST_URL = {"/auth/register", "/auth/login", "/product/get/all"};
+    private static final String[] WHITE_LIST_URL = {"/auth/register", "/auth/login", "/product/get/all", "/food-item/all"};
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
